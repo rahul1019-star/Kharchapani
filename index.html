@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KharchaPani</title>
+<style>
+body{margin:0;background:#101426;color:white;font-family:Arial;text-align:center}
+header{background:#202b49;padding:20px}
+h1{color:#ffd54a}
+.balance,.game,#area{background:#202b49;margin:15px;padding:18px;border-radius:14px}
+.games{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px}
+button{background:#ffd54a;border:0;border-radius:8px;padding:12px;margin:5px;font-weight:bold}
+#result{color:#ffd54a;font-size:20px}
+</style>
+</head>
+<body>
+<header><h1>💰 KharchaPani</h1><p>Games • Fun • Virtual Points</p></header>
+<div class="balance">Aapke Points<h2 id="points">1000</h2><small>Demo only — real money nahi</small></div>
+<div class="games">
+<div class="game"><h3>🚀 Aviator</h3><button onclick="aviator()">Play</button></div>
+<div class="game"><h3>🎨 Colour Lottery</h3><button onclick="colour()">Play</button></div>
+<div class="game"><h3>🔢 Number Lottery</h3><button onclick="numberGame()">Play</button></div>
+<div class="game"><h3>📊 Big / Small</h3><button onclick="bigSmall()">Play</button></div>
+</div>
+<div id="area"><h3 id="title">Game chunein</h3><div id="options"></div><p id="result"></p></div>
+<script>
+let points=1000;
+function show(msg){document.getElementById('result').textContent=msg;document.getElementById('points').textContent=points}
+function setup(name,html){document.getElementById('title').textContent=name;document.getElementById('options').innerHTML=html;show('')}
+function colour(){setup('Colour Lottery','<button onclick="pickColour(\\'Red\\')">Red</button><button onclick="pickColour(\\'Green\\')">Green</button><button onclick="pickColour(\\'Violet\\')">Violet</button>')}
+function pickColour(c){if(points<10)return show('Points kam hain');points-=10;let r=['Red','Green','Violet'][Math.floor(Math.random()*3)];if(c===r)points+=20;show('Result: '+r+(c===r?' — Jeet! +20':' — Is baar nahi'))}
+function numberGame(){setup('Number Lottery','<select id="n">'+Array.from({length:10},(_,i)=>'<option>'+i+'</option>').join('')+'</select><button onclick="pickNumber()">Play</button>')}
+function pickNumber(){if(points<10)return show('Points kam hain');points-=10;let n=Math.floor(Math.random()*10),c=+document.getElementById('n').value;if(c===n)points+=50;show('Number aaya '+n+(c===n?' — Jeet! +50':' — Is baar nahi'))}
+function bigSmall(){setup('Big / Small','<button onclick="pickSize(\\'Big\\')">Big</button><button onclick="pickSize(\\'Small\\')">Small</button>')}
+function pickSize(c){if(points<10)return show('Points kam hain');points-=10;let r=Math.random()<.5?'Small':'Big';if(c===r)points+=20;show('Result: '+r+(c===r?' — Jeet! +20':' — Is baar nahi'))}
+function aviator(){setup('Aviator Demo','<button onclick="fly()">Start Round</button>')}
+function fly(){let x=(1+Math.random()*4).toFixed(2);show('🚀 Demo multiplier: '+x+'x')}
+</script>
+</body>
+</html>
